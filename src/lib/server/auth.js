@@ -1,47 +1,62 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import Credentials from "@auth/core/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { db } from "./db";
-import { users } from "./schema";
+import { db } from "$lib/server/db";
+import { users } from "$lib/server/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
   adapter: DrizzleAdapter(db),
+
   session: {
     strategy: "database"
   },
+
   providers: [
     Credentials({
       credentials: {
         email: {},
         password: {}
       },
+
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+  if (
+    !credentials ||
+    typeof credentials.email !== "string" ||
+    typeof credentials.password !== "string"
+  ) {
+    return null;
+  }
 
-        const user = await db
-          .select()
-          .from(users)
-          .where(eq(users.email, credentials.email))
-          .then((res) => res[0]);
+  const email = credentials.email;
+  const password = credentials.password;
 
-        if (!user || !user.password) return null;
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email));
 
-        const valid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
+  const user = result[0];
 
-        if (!valid) return null;
+  if (!user || !user.password) {
+    return null;
+  }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name
-        };
-      }
+  const isValid = await bcrypt.compare(password, user.password);
+
+  if (!isValid) {
+    return null;
+  }
+
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name
+  };
+}
     })
   ],
+
   secret: process.env.AUTH_SECRET
 });

@@ -12,7 +12,7 @@
       </p>
     </div>
 
-    <form method="POST" class="flex flex-col gap-5">
+    <form method="POST" class="flex flex-col gap-5" action="/auth/callback/credentials">
 
       <div>
         <label for="email" class="block mb-1 text-sm font-medium text-gray-700">
