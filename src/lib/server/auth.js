@@ -10,7 +10,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   adapter: DrizzleAdapter(db),
 
   session: {
-    strategy: "database"
+    strategy: "jwt"
   },
 
   providers: [
