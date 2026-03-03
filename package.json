@@ -33,8 +33,10 @@
 		"@auth/core": "^0.41.1",
 		"@auth/drizzle-adapter": "^1.11.1",
 		"@auth/sveltekit": "^1.11.1",
+		"@types/nodemailer": "^7.0.11",
 		"bcryptjs": "^3.0.3",
 		"drizzle-orm": "^0.45.1",
+		"nodemailer": "^7.0.13",
 		"pg": "^8.19.0"
 	}
 }

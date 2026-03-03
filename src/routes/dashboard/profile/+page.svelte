@@ -1,0 +1,109 @@
+<script lang="ts">
+	import { enhance } from '$app/forms';
+
+	let { data, form } = $props();
+</script>
+
+<div>
+	<div class="mb-8">
+		<h1 class="text-3xl font-bold text-gray-900">Edit Profile</h1>
+		<p class="text-gray-500 mt-2">Update your personal information.</p>
+	</div>
+
+	<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 max-w-lg">
+		{#if form?.success}
+			<div
+				class="bg-green-50 border border-green-200 text-green-700 p-3 rounded-xl text-sm mb-6 flex items-center gap-2"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-5 h-5 flex-shrink-0"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+					/>
+				</svg>
+				Profile updated successfully!
+			</div>
+		{/if}
+
+		{#if form?.error}
+			<div
+				class="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl text-sm mb-6 flex items-center gap-2"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-5 h-5 flex-shrink-0"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+					/>
+				</svg>
+				{form.error}
+			</div>
+		{/if}
+
+		<form method="POST" class="flex flex-col gap-5" use:enhance>
+			<div>
+				<label for="name" class="block mb-1.5 text-sm font-medium text-gray-700"
+					>Full Name</label
+				>
+				<input
+					id="name"
+					name="name"
+					type="text"
+					required
+					value={data.user?.name || ''}
+					class="w-full border border-gray-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+				/>
+			</div>
+
+			<div>
+				<label for="email" class="block mb-1.5 text-sm font-medium text-gray-700"
+					>Email Address</label
+				>
+				<input
+					id="email"
+					name="email"
+					type="email"
+					required
+					value={data.user?.email || ''}
+					class="w-full border border-gray-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+				/>
+			</div>
+
+			<button
+				type="submit"
+				class="bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition-all duration-200 font-medium flex items-center justify-center gap-2"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-4 h-4"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m4.5 12.75 6 6 9-13.5"
+					/>
+				</svg>
+				Save Changes
+			</button>
+		</form>
+	</div>
+</div>

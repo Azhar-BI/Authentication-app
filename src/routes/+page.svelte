@@ -1,4 +1,6 @@
 <script lang="ts">
+  let { data } = $props();
+
   const services = [
     {
       title: "Web Development",
@@ -71,15 +73,29 @@
       <a href="#contact" class="hover:text-black transition">Contact</a>
     </div>
     <div class="flex items-center gap-3">
-      <a href="/login" class="text-sm text-gray-700 hover:text-black transition font-medium">
-        Login
-      </a>
-      <a
-        href="/register"
-        class="text-sm bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition font-medium"
-      >
-        Get Started
-      </a>
+      {#if data.user}
+        <a href="/dashboard" class="text-sm text-gray-700 hover:text-black transition font-medium">
+          Dashboard
+        </a>
+        <form method="POST" action="/logout">
+          <button
+            type="submit"
+            class="text-sm bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition font-medium"
+          >
+            Logout
+          </button>
+        </form>
+      {:else}
+        <a href="/login" class="text-sm text-gray-700 hover:text-black transition font-medium">
+          Login
+        </a>
+        <a
+          href="/register"
+          class="text-sm bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition font-medium"
+        >
+          Get Started
+        </a>
+      {/if}
     </div>
   </div>
 </nav>

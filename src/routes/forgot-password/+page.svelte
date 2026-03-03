@@ -11,19 +11,16 @@
 			<a href="/" class="text-xl font-bold tracking-tight">
 				<span class="text-black">Auth</span><span class="text-gray-500">Flow</span>
 			</a>
-			<div class="flex items-center gap-3">
-				<span class="text-sm text-gray-500 hidden sm:inline">Already have an account?</span>
-				<a
-					href="/login"
-					class="text-sm bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition font-medium"
-				>
-					Login
-				</a>
-			</div>
+			<a
+				href="/login"
+				class="text-sm text-gray-700 hover:text-black transition font-medium"
+			>
+				Back to Login
+			</a>
 		</div>
 	</nav>
 
-	<!-- Register Form -->
+	<!-- Forgot Password Form -->
 	<div class="flex items-center justify-center min-h-screen pt-20 px-4">
 		<div class="w-full max-w-md">
 			<div class="bg-white p-10 rounded-2xl shadow-xl border border-gray-200">
@@ -42,34 +39,50 @@
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+								d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
 							/>
 						</svg>
 					</div>
-					<h1 class="text-3xl font-bold text-gray-900">Join AuthFlow</h1>
+					<h1 class="text-3xl font-bold text-gray-900">Forgot Password</h1>
 					<p class="text-gray-500 text-sm mt-2">
-						Create your account to access secure services.
+						Enter your email to receive a password reset link.
 					</p>
 				</div>
 
+				{#if form?.success}
+					<div
+						class="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl text-sm text-center mb-5"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-5 h-5 inline-block mr-1 -mt-0.5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+							/>
+						</svg>
+						If an account exists with that email, a reset link has been sent.
+					</div>
+				{/if}
+
+				{#if form?.error}
+					<div
+						class="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl text-sm text-center mb-5"
+					>
+						{form.error}
+					</div>
+				{/if}
+
 				<form method="POST" class="flex flex-col gap-5" use:enhance>
 					<div>
-						<label for="name" class="block mb-1.5 text-sm font-medium text-gray-700"
-							>Full Name</label
-						>
-						<input
-							id="name"
-							name="name"
-							type="text"
-							required
-							class="w-full border border-gray-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
-							placeholder="John Doe"
-						/>
-					</div>
-
-					<div>
 						<label for="email" class="block mb-1.5 text-sm font-medium text-gray-700"
-							>Email Address</label
+							>Email</label
 						>
 						<input
 							id="email"
@@ -81,39 +94,15 @@
 						/>
 					</div>
 
-					<div>
-						<label for="password" class="block mb-1.5 text-sm font-medium text-gray-700"
-							>Password</label
-						>
-						<input
-							id="password"
-							name="password"
-							type="password"
-							required
-							minlength="6"
-							class="w-full border border-gray-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
-							placeholder="Min. 6 characters"
-						/>
-						<p class="text-xs text-gray-400 mt-1.5">Must be at least 6 characters.</p>
-					</div>
-
-					{#if form?.error}
-						<div
-							class="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl text-sm text-center"
-						>
-							{form.error}
-						</div>
-					{/if}
-
 					<button
 						type="submit"
 						class="bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition-all duration-200 font-medium"
 					>
-						Create Account
+						Send Reset Link
 					</button>
 
 					<p class="text-sm text-center text-gray-500">
-						Already have an account?
+						Remember your password?
 						<a href="/login" class="text-black font-medium hover:underline">Login</a>
 					</p>
 				</form>
