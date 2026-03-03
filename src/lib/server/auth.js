@@ -13,6 +13,10 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     strategy: "jwt"
   },
 
+  pages: {
+    signIn: "/login"
+  },
+
   providers: [
     Credentials({
       credentials: {

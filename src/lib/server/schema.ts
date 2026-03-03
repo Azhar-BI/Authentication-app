@@ -69,3 +69,18 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token)
   })
 );
+
+/**
+ * PASSWORD RESET TOKENS
+ */
+export const passwordResetTokens = pgTable(
+  "password_reset_tokens",
+  {
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires").notNull()
+  },
+  (prt) => ({
+    compoundKey: primaryKey(prt.identifier, prt.token)
+  })
+);
