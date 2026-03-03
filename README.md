@@ -72,7 +72,7 @@ Before setting up the project, make sure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/Azhar-BI/Authentication-app.git>
 cd authentication-app
 ```
 
