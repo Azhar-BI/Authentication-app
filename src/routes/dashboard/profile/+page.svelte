@@ -2,6 +2,13 @@
 	import { enhance } from '$app/forms';
 
 	let { data, form } = $props();
+
+	function getInitials(name: string | undefined, email: string | undefined): string {
+		if (name) {
+			return name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2);
+		}
+		return (email?.[0] || 'U').toUpperCase();
+	}
 </script>
 
 <div>
@@ -10,7 +17,18 @@
 		<p class="text-gray-500 mt-2">Update your personal information.</p>
 	</div>
 
-	<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 max-w-lg">
+	<div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 max-w-xl">
+		<!-- Avatar and user info header -->
+		<div class="flex items-center gap-4 pb-6 mb-6 border-b border-gray-100">
+			<div class="w-14 h-14 bg-black rounded-2xl flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+				{getInitials(data.user?.name, data.user?.email)}
+			</div>
+			<div class="min-w-0">
+				<p class="font-semibold text-gray-900 truncate">{data.user?.name || 'User'}</p>
+				<p class="text-sm text-gray-500 truncate">{data.user?.email}</p>
+			</div>
+		</div>
+
 		{#if form?.success}
 			<div
 				class="bg-green-50 border border-green-200 text-green-700 p-3 rounded-xl text-sm mb-6 flex items-center gap-2"

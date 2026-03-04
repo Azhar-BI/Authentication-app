@@ -17,8 +17,8 @@
 
 	<!-- Verification Result -->
 	<div class="flex items-center justify-center min-h-screen pt-20 px-4">
-		<div class="w-full max-w-md">
-			<div class="bg-white p-10 rounded-2xl shadow-xl border border-gray-200 text-center">
+		<div class="w-full max-w-md animate-[fadeInUp_0.5s_ease-out]">
+			<div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200 text-center">
 				{#if data.success}
 					<div
 						class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5"
@@ -80,3 +80,16 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>

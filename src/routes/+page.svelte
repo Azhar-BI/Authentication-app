@@ -1,5 +1,6 @@
 <script lang="ts">
   let { data } = $props();
+  let mobileMenuOpen = $state(false);
 
   const services = [
     {
@@ -72,7 +73,7 @@
       <a href="#testimonials" class="hover:text-black transition">Testimonials</a>
       <a href="#contact" class="hover:text-black transition">Contact</a>
     </div>
-    <div class="flex items-center gap-3">
+    <div class="hidden md:flex items-center gap-3">
       {#if data.user}
         <a href="/dashboard" class="text-sm text-gray-700 hover:text-black transition font-medium">
           Dashboard
@@ -97,23 +98,97 @@
         </a>
       {/if}
     </div>
+
+    <!-- Mobile hamburger button -->
+    <button
+      class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg hover:bg-gray-100 transition"
+      onclick={() => mobileMenuOpen = !mobileMenuOpen}
+      aria-label="Toggle menu"
+    >
+      {#if mobileMenuOpen}
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      {:else}
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      {/if}
+    </button>
   </div>
 </nav>
 
+<!-- Mobile menu overlay -->
+{#if mobileMenuOpen}
+  <div class="fixed inset-0 z-40 md:hidden">
+    <!-- Backdrop -->
+    <button
+      class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      onclick={() => mobileMenuOpen = false}
+      aria-label="Close menu"
+    ></button>
+
+    <!-- Menu panel -->
+    <div class="absolute top-0 right-0 w-72 h-full bg-white shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <span class="text-lg font-bold tracking-tight">
+          <span class="text-black">Auth</span><span class="text-gray-500">Flow</span>
+        </span>
+        <button
+          class="w-10 h-10 rounded-lg hover:bg-gray-100 transition flex items-center justify-center"
+          onclick={() => mobileMenuOpen = false}
+          aria-label="Close menu"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="flex flex-col px-6 py-6 gap-1">
+        <a href="#services" class="py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-black rounded-xl transition font-medium" onclick={() => mobileMenuOpen = false}>Services</a>
+        <a href="#about" class="py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-black rounded-xl transition font-medium" onclick={() => mobileMenuOpen = false}>About</a>
+        <a href="#testimonials" class="py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-black rounded-xl transition font-medium" onclick={() => mobileMenuOpen = false}>Testimonials</a>
+        <a href="#contact" class="py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-black rounded-xl transition font-medium" onclick={() => mobileMenuOpen = false}>Contact</a>
+      </nav>
+
+      <div class="mt-auto px-6 pb-8 flex flex-col gap-3">
+        {#if data.user}
+          <a href="/dashboard" class="text-center py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:border-black hover:text-black transition font-medium text-sm">
+            Dashboard
+          </a>
+          <form method="POST" action="/logout">
+            <button type="submit" class="w-full py-3 px-4 bg-black text-white rounded-xl hover:bg-gray-800 transition font-medium text-sm">
+              Logout
+            </button>
+          </form>
+        {:else}
+          <a href="/login" class="text-center py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:border-black hover:text-black transition font-medium text-sm">
+            Login
+          </a>
+          <a href="/register" class="text-center py-3 px-4 bg-black text-white rounded-xl hover:bg-gray-800 transition font-medium text-sm">
+            Get Started
+          </a>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/if}
+
 <!-- Hero Section -->
 <section class="min-h-screen flex items-center bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-20">
-  <div class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+  <div class="max-w-6xl mx-auto px-6 py-12 md:py-20 grid md:grid-cols-2 gap-12 items-center">
     <div>
       <div class="inline-block bg-gray-100 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wide">
         Trusted by 200+ Companies
       </div>
-      <h1 class="text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
         Technology Solutions That
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-700 to-black">
           Drive Growth
         </span>
       </h1>
-      <p class="text-gray-600 mt-6 text-lg leading-relaxed max-w-lg">
+      <p class="text-gray-600 mt-6 text-base md:text-lg leading-relaxed max-w-lg">
         We design, build, and scale digital products and infrastructure that help businesses
         thrive in the modern world. From web apps to cloud architecture — we've got you covered.
       </p>
@@ -311,8 +386,8 @@
 <!-- Footer -->
 <footer class="bg-gray-950 text-gray-400 py-16">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="grid md:grid-cols-4 gap-10 mb-12">
-      <div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+      <div class="col-span-2 md:col-span-1">
         <p class="text-white font-bold text-lg mb-4">
           <span class="text-white">Auth</span><span class="text-gray-500">Flow</span>
         </p>
