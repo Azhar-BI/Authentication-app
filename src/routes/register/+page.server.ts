@@ -23,6 +23,10 @@ export const actions: Actions = {
 			return fail(400, { error: "Password must be at least 6 characters." });
 		}
 
+		if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+			return fail(400, { error: "Password must contain both letters and numbers." });
+		}
+
 		// Check if user exists
 		const existingUser = await db
 			.select()
