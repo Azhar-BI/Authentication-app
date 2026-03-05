@@ -12,22 +12,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT now()
 );
 
--- Accounts table (Auth.js OAuth providers)
-CREATE TABLE IF NOT EXISTS accounts (
-    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    type TEXT NOT NULL,
-    provider TEXT NOT NULL,
-    provider_account_id TEXT NOT NULL,
-    refresh_token TEXT,
-    access_token TEXT,
-    expires_at TIMESTAMP,
-    token_type TEXT,
-    scope TEXT,
-    id_token TEXT,
-    session_state TEXT,
-    PRIMARY KEY (provider, provider_account_id)
-);
-
 -- Sessions table (database session storage)
 CREATE TABLE IF NOT EXISTS sessions (
     session_token TEXT PRIMARY KEY,

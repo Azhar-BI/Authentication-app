@@ -1,9 +1,7 @@
-import { handle as authHandle } from "$lib/server/auth";
 import { getSessionAndUser } from "$lib/server/session";
-import { sequence } from "@sveltejs/kit/hooks";
 import type { Handle } from "@sveltejs/kit";
 
-const sessionHandle: Handle = async ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get("session_token");
 
 	if (sessionToken) {
@@ -23,5 +21,3 @@ const sessionHandle: Handle = async ({ event, resolve }) => {
 
 	return resolve(event);
 };
-
-export const handle = sequence(authHandle, sessionHandle);
